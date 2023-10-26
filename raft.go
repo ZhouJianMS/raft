@@ -1049,6 +1049,8 @@ func (r *raft) poll(id uint64, t pb.MessageType, v bool) (granted int, rejected 
 }
 
 func (r *raft) Step(m pb.Message) error {
+	r.logger.Infof("Debug: %x [term: %d] received a %s message from %x [term: %d]",
+				r.id, r.Term, m.Type, m.From, m.Term)
 	// Handle the message term, which may result in our stepping down to a follower.
 	switch {
 	case m.Term == 0:
